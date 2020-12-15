@@ -10,6 +10,7 @@
     "postinstall": "vue-cli-service serve && node ./shell/postInstall.js"
   },
   "dependencies": {
+    "axios": "^0.21.0",
     "css-loader": "^3.6.0",
     "echarts": "^4.9.0",
     "element-ui": "^2.13.2",
