@@ -18,12 +18,12 @@ export default {
     },
     data () {
       this.chartSettings = {
-        metrics: ['cost', 'profit'],
+        metrics: ['footprint', 'free'],
         dimension: ['time']
       }
       return {
         chartData: {
-          columns: ['date', 'cost', 'profit', 'growthRate'],
+          columns: ['date', 'footprint', 'free', 'growthRate'],
           rows: [
             { 'cost': 1523, 'time': '01/01(clicka)', 'profit': 1523, 'growthRate': 0.12, 'action': 'clicka' },
             { 'cost': 1223, 'time': '01/02(clickb)', 'profit': 1523, 'growthRate': 0.345, 'action': 'clickb' },
@@ -66,7 +66,7 @@ export default {
 }
 .data-n-view {
     float: left;
-    width: 900px;
+    width: 1200px;
     border-right: 2px solid #dddddd;
     min-height: 900px;
 }
