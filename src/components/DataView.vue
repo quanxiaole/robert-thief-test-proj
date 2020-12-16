@@ -1292,7 +1292,7 @@ export default {
         xmlhttp.send();
     }
 
-    refresh();
+    // refresh();
       
     },
     watch: {
@@ -1347,7 +1347,7 @@ export default {
 }
 .action-btns {
     text-align: left;
-    width: 320px;
+    width: 360px;
     height: 530px;
     overflow-y: scroll;
     float: left;
