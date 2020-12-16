@@ -144,11 +144,11 @@ export default {
                         window.scrollTo(0, document.body.scrollHeight);
                     }
                 }else {
-
+                    setTimeout(refresh, refreshDelay);
                 }
             }
         }
-        xmlhttp.open("GET", "debug?function=vMemoryFetch", true);
+        xmlhttp.open("GET", "memoryfetch", true);
         xmlhttp.send();
     }
 
