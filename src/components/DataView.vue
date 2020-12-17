@@ -2,7 +2,7 @@
     <div class="data-view">
         <div class="data-n-view">
             <ve-line :data="chartData" :settings="chartSettings" :events="chartEvents"></ve-line>
-            <!-- <div id="myChart" style="height: 400px"> </div> -->
+            <div id="myChart" style="height: 400px"> </div>
             <hr>
             <div class="action-btns">
               <div class="action-action" v-for="(item, index) in chartData.rows" :key="index"
@@ -37,6 +37,7 @@ export default {
 
     },
     data () {
+      myChart: {}
       this.chartSettings = {
         metrics: ['free', 'footprint'],
         dimension: ['time'],
@@ -1221,6 +1222,36 @@ export default {
       }
     },
     computed: {
+      chartDataTime() {
+        let res = [];
+        for(let i=0; i<this.chartData.rows.length; i++) {
+          res.push(this.chartData.rows[i].time)
+        }
+        console.log('time', res)
+        return res;
+      },
+      chartDataSeries() {
+        let freeData = [];
+        let footData = [];
+        for(let i=0; i<this.chartData.rows.length; i++) {
+          freeData.push(parseFloat(this.chartData.rows[i].free))
+          footData.push(parseFloat(this.chartData.rows[i].footprint))
+        }
+
+        let res = [
+          {
+            name: 'free',
+            type: 'line',
+            data: freeData
+          },{
+            name: 'footprint',
+            type: 'line',
+            data: footData
+          }
+        ];
+        console.log('data', res)
+        return res;
+      }
     },
     created() {
 
@@ -1229,23 +1260,27 @@ export default {
       // 基于准备好的dom，初始化echarts实例
       console.log('echarts', echarts)
 
-      // var myChart = echarts.init(document.getElementById('myChart'));
-      // // 绘制图表
-      // myChart.setOption({
-      //     title: {
-      //         text: 'ECharts 入门示例'
-      //     },
-      //     tooltip: {},
-      //     xAxis: {
-      //         data: ['衬衫', '羊毛衫', '雪纺衫', '裤子', '高跟鞋', '袜子']
-      //     },
-      //     yAxis: {},
-      //     series: [{
-      //         name: '销量',
-      //         type: 'bar',
-      //         data: [5, 20, 36, 10, 10, 20]
-      //     }]
-      // });
+      this.myChart = echarts.init(document.getElementById('myChart'));
+      // 绘制图表
+      this.myChart.setOption({
+          title: {
+              text: 'ECharts 入门示例'
+          },
+          tooltip: {},
+          xAxis: {
+              type: 'category',
+              data: this.chartDataTime || ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'] // 时间列表
+          },
+          yAxis: {
+              type: 'value'
+          },
+          // series: [{
+          //     data: this.chartDataSeries || [820, 932, 901, 934, 1290, 1330, 1320], // 数据列表
+          //     type: 'line',
+          //     smooth: true
+          // }]
+          series: this.chartDataSeries
+      });
 
 
     var refreshDelay = 1000;
@@ -1308,6 +1343,16 @@ export default {
     methods: {
       clickOnAction(index) {
         this.currentSelect = index;
+        this.myChart.dispatchAction({ 
+            type: 'highlight',
+            dataIndex: index
+        })
+        this.myChart.dispatchAction({
+            type: 'showTip',
+            // 系列的 index，在 tooltip 的 trigger 为 axis 的时候可选。
+            dataIndex: index,
+            position: ['50%', '50%'],
+        })
       },
 
       pretty: function(value) {
