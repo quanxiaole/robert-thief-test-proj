@@ -16,7 +16,9 @@
     "element-ui": "^2.13.2",
     "v-charts": "^1.19.0",
     "vue": "^2.6.11",
-    "vue-json-pretty": "^2.0.0"
+    "vue-json-pretty": "^2.0.0",
+    "vue-xlsx": "^0.2.1",
+    "xlsx": "^0.16.9"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^4.2.0",
